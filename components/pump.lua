@@ -1,10 +1,13 @@
 local pump = {
+	name = "pump",
 	config = {
 		size = { 1, 0.5 },
 		ports = {
-			input = { { side = "left", fluid = "water" } },
-			output = { { side = "right", fluid = "water" } },
+			input = { { x = 0, y = 0.25 } },
+			output = { { x = 1, y = 0.25 } },
 		},
+		max_head = 8.0, -- MPa
+		max_flow = 500, -- kg/s
 	},
 	controls = {
 		power = 10, -- watts i guess? its not being powered BY anything
@@ -23,21 +26,21 @@ local pump = {
 -- input = { temp, pressure, flow_rate } of incoming
 function pump.run(self, dt, input, downstream_resistance)
 	local state = self.state
+	local config = self.config
 	local controls = self.controls
 	local speed_fraction = (state.power / 100) * (state.integrity / 100)
 
 	-- scale max values by speed; both head and flow scale with speed
-	local max_head = 8.0 * speed_fraction -- MPa, tunable per pump type
-	local max_flow = 500 * speed_fraction -- kg/s, tunable per pump type
+	local max_head = config.max_head * speed_fraction -- MPa
+	local max_flow = config.max_flow * speed_fraction -- kg/s
 
 	-- operating point: where pump curve meets system resistance
 	-- pressure_rise = resistance * flow^2  AND  pressure_rise = max_head*(1-(flow/max_flow)^2)
-	-- solving for flow_rate:
 	local flow_rate = max_flow * math.sqrt(max_head / (max_head + downstream_resistance * max_flow ^ 2))
 	local pressure_rise = downstream_resistance * flow_rate ^ 2
 
 	-- cavitation: if inlet pressure too low, pump loses flow rapidly
-	local npsh_required = 0.5 -- MPa minimum inlet pressure, tunable
+	local npsh_required = 0.5 -- MPa minimum inlet pressure
 	if input.pressure < npsh_required then
 		local cavitation_factor = input.pressure / npsh_required
 		flow_rate = flow_rate * cavitation_factor ^ 2

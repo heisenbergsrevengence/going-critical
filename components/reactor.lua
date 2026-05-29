@@ -1,9 +1,10 @@
 local reactor = {
+	name = "reactor",
 	config = {
 		size = { 2, 4 },
 		ports = {
-			input = { { side = "left", fluid = "water" } },
-			output = { { side = "right", fluid = "water" } },
+			input = { { x = 0, y = 1.5 } },
+			output = { { x = 2, y = 1.5 } },
 		},
 	},
 	controls = {

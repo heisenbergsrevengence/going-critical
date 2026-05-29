@@ -45,7 +45,7 @@ Target Audience
   Engineering nerds or those interested in nuclear power
 
 Design
-  Minimalist simplified look, main color pallete is white, orange and grey (currently).
+  Minimalist simplified look, main color pallete is white, blue,orange and grey (currently).
   The main grid area will replicate the look of a process flow diagram. Control panels should also be similarly minimalistic and customizable. Try to keep the aesthetic of Higgsino’s videos as much as possible.
 
 Controls
@@ -54,6 +54,9 @@ Controls
 MINIMUM VIABLE PRODUCT
   - Proof of concept: A simple simulation of a reactor (RBMK, likely, for simplicity) with a few critical components that the user can assemble and control. It fails if the user grossly mismanages things.
 
+win/lose Condition:
+  after running the reactor,if it produces net positive power the player gets a win screen,asking them to go for "endless mode"
 
-
+  the lose condition is the reactor core integrity hitting 0%,the simulation should still keep running for 20-15secs so the player can see fallout
+  another soft-lose condition is most components being completly fucked due to something else,so the player just should restart
 

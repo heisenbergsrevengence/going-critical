@@ -1,14 +1,16 @@
+local helper = require("helper")
+local config = require("config")
+
 local grid = {}
 
 function grid.create(Width, Height, gridSize, gridColor)
-	gridSize = gridSize or 90
-	gridColor = gridColor or { 0.8, 0.8, 0.8 }
+	gridSize = gridSize or config.grid.size
 	local canvas = love.graphics.newCanvas(Width, Height)
 
 	love.graphics.setCanvas(canvas)
 	love.graphics.clear()
 
-	love.graphics.setColor(gridColor)
+	helper.setRGBColor(config.colors.gridLines)
 	love.graphics.setLineWidth(2)
 
 	for x = 0, Width, gridSize do
@@ -19,8 +21,8 @@ function grid.create(Width, Height, gridSize, gridColor)
 		love.graphics.line(0, y, Width, y)
 	end
 
-	love.graphics.setColor(1, 1, 1)
 	love.graphics.setCanvas()
+	love.graphics.setColor(1, 1, 1)
 	return canvas
 end
 

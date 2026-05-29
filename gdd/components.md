@@ -1,3 +1,10 @@
+each components can be described as a pure-ish function with an input and output,with each module in the components/ dir being treated as a component
+
+Pipe:
+  - technically not a reactor component like the rest but still will be coded as one
+  - simply passes one component's output to another's input,doesnt do transforms
+  - this allows for emergent behavior(eg if a player wires a pipe between 2 non-trivial components(like a heat exchanger and reactor) the simulation would be accurate)
+
 Reactor Core
 - Controls: control rod position (0-100%)/power level, SCRAM button
 - Readable: water level, water temp, control rod integrity, core temp, core integrity, neutron flux (power level indicator)
